@@ -1,4 +1,5 @@
 import path from 'path';
+import fetch from 'isomorphic-fetch';
 
 async function turnPizzaIntoPages({ graphql, actions }) {
   const pizzaTemplate = path.resolve('./src/templates/SinglePizza.js');
@@ -51,6 +52,37 @@ async function turnToppingsIntoPages({ graphql, actions }) {
       },
     });
   });
+}
+
+async function fetchBeersAndTurnIntoNodes({
+  actions,
+  createNodeId,
+  createContentDigest,
+}) {
+  const res = await fetch('https://sampleapis.com/wines/api/reds');
+  const wines = await res.json();
+
+  wines.forEach((wine) => {
+    const nodeMeta = {
+      id: createNodeId(`wine-${wine.winery}`),
+      parent: null,
+      children: [],
+      internal: {
+        type: 'Wine',
+        mediaType: 'application/json',
+        contentDigest: createContentDigest(wine),
+      },
+    };
+
+    actions.createNode({
+      ...wine,
+      ...nodeMeta,
+    });
+  });
+}
+
+export async function sourceNodes(params) {
+  await Promise.all([fetchBeersAndTurnIntoNodes(params)]);
 }
 
 export async function createPages(params) {

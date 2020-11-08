@@ -4,11 +4,12 @@ dotenv.config({ path: '.env' });
 
 export default {
   siteMetadata: {
-    title: `Gatsby`,
+    title: `Slick Slices`,
     siteUrl: `https://gatsby.pizza`,
     description: `The best pizza in Sylhet!`,
   },
   plugins: [
+    'gatsby-plugin-react-helmet',
     'gatsby-plugin-styled-components',
     {
       resolve: 'gatsby-source-sanity',

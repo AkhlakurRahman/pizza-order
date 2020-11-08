@@ -1,6 +1,7 @@
 import React from 'react';
 import { graphql } from 'gatsby';
 import styled from 'styled-components';
+import SEO from '../components/SEO/SEO';
 
 const WineGridStyles = styled.div`
   display: grid;
@@ -28,6 +29,7 @@ export default function wines({ data }) {
   console.log(data);
   return (
     <>
+      <SEO title={`Wines! We Have - ${data.wines.nodes.length} in Stock`} />
       <h2 className="center">
         We have {data.wines.nodes.length} wines available. Dine only!
       </h2>

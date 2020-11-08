@@ -82,6 +82,10 @@ async function fetchBeersAndTurnIntoNodes({
 }
 
 async function turnSliceMastersIntoPages({ graphql, actions }) {
+  const singleSliceMasterTemplate = path.resolve(
+    './src/templates/SingleSliceMaster.js'
+  );
+
   const { data } = await graphql(`
     query {
       sliceMasters: allSanityPerson {
@@ -96,6 +100,16 @@ async function turnSliceMastersIntoPages({ graphql, actions }) {
       }
     }
   `);
+
+  data.sliceMasters.nodes.forEach((sliceMaster) => {
+    actions.createPage({
+      path: `/slicemaster/${sliceMaster.slug.current}`,
+      component: singleSliceMasterTemplate,
+      context: {
+        slug: sliceMaster.slug.current,
+      },
+    });
+  });
 
   const pageSize = parseInt(process.env.GATSBY_PAGE_SIZE);
   const pageCount = Math.ceil(data.sliceMasters.totalCount / pageSize);

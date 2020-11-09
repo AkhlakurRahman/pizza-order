@@ -31,7 +31,7 @@ export const query = graphql`
       nodes {
         id
         name
-        pirce
+        price
         slug {
           current
         }

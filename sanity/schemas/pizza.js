@@ -31,8 +31,8 @@ export default {
       },
     },
     {
-      name: 'pirce',
-      title: 'Pirce',
+      name: 'price',
+      title: 'Price',
       type: 'number',
       description: 'Price of the pizza in cents',
       validation: (Rule) => Rule.min(1000),

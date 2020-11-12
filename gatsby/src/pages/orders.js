@@ -6,6 +6,8 @@ import SEO from '../components/SEO/SEO';
 import useForm from '../utils/useForm';
 import calculatePizzaPrice from '../utils/calculatePizzaPrice';
 import formatMoney from '../utils/formatMoney';
+import OrderStyles from '../styles/OrderStyles';
+import MenuItemStyles from '../styles/MenuItemStyles';
 
 export default function OdersPage({ data }) {
   const { values, updateValue } = useForm({
@@ -18,38 +20,34 @@ export default function OdersPage({ data }) {
   return (
     <>
       <SEO title="Order A Pizza" />
-      <form>
+      <OrderStyles>
         <fieldset>
           <legend>Your Info</legend>
 
-          <label htmlFor="name">
-            <span>Name</span>
-            <input
-              type="text"
-              name="name"
-              value={values.name}
-              onChange={updateValue}
-              id="name"
-            />
-          </label>
+          <label htmlFor="name">Name</label>
+          <input
+            type="text"
+            name="name"
+            value={values.name}
+            onChange={updateValue}
+            id="name"
+          />
 
-          <label htmlFor="email">
-            <span>Email</span>
-            <input
-              type="text"
-              name="email"
-              value={values.email}
-              onChange={updateValue}
-              id="email"
-            />
-          </label>
+          <label htmlFor="email">Email</label>
+          <input
+            type="text"
+            name="email"
+            value={values.email}
+            onChange={updateValue}
+            id="email"
+          />
         </fieldset>
 
-        <fieldset>
+        <fieldset className="menu">
           <legend>Menu</legend>
 
           {pizzas.map((pizza) => (
-            <div key={pizza.id}>
+            <MenuItemStyles key={pizza.id}>
               <Img fluid={pizza.image.asset.fluid} alt={pizza.name} />
               <div>
                 <h2>{pizza.name}</h2>
@@ -61,12 +59,14 @@ export default function OdersPage({ data }) {
                   </button>
                 ))}
               </div>
-            </div>
+            </MenuItemStyles>
           ))}
         </fieldset>
 
-        <fieldset>Order</fieldset>
-      </form>
+        <fieldset className="order">
+          <legend>Order</legend>
+        </fieldset>
+      </OrderStyles>
     </>
   );
 }

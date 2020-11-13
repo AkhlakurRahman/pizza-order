@@ -19,15 +19,27 @@ export default function OdersPage({ data }) {
     email: '',
   });
 
-  const { order, addToOrder, removeFromOrder } = usePizza({
+  const {
+    order,
+    addToOrder,
+    removeFromOrder,
+    error,
+    loading,
+    message,
+    submitOrder,
+  } = usePizza({
     pizzas,
-    inputs: values,
+    values,
   });
+
+  if (message) {
+    return <p>{message}</p>;
+  }
 
   return (
     <>
       <SEO title="Order A Pizza" />
-      <OrderStyles>
+      <OrderStyles onSubmit={submitOrder}>
         <fieldset>
           <legend>Your Info</legend>
 
@@ -86,7 +98,10 @@ export default function OdersPage({ data }) {
           <h3>
             Your total is {formatMoney(calculateOrderTotal(order, pizzas))}
           </h3>
-          <button type="button">Order Ahead!</button>
+          <div>{error ? <p>Error: ${error}</p> : ''}</div>
+          <button type="submit" disabled={loading}>
+            {loading ? 'Submitting Order!' : 'Order Ahead!'}
+          </button>
         </fieldset>
       </OrderStyles>
     </>
